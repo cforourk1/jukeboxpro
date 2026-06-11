@@ -57,10 +57,9 @@ router.get("/:id/tracks", async (req, res) => {
 
 router.post("/:id/tracks", async (req, res) => {
   if (!req.body) return res.status(400).send("Request body is required.");
-
   const { trackId } = req.body;
   if (!trackId) return res.status(400).send("Request body requires: trackId");
-
+  if (req.playlist.user_id !== req.user.id) return res.status(403).send("Forbidden.");
   const playlistTrack = await createPlaylistTrack(req.playlist.id, trackId);
   res.status(201).send(playlistTrack);
 });
