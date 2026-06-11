@@ -13,6 +13,7 @@
     "db:reset": "npm run db:schema && npm run db:seed"
   },
   "dependencies": {
+    "@faker-js/faker": "^10.4.0",
     "bcryptjs": "^3.0.3",
     "express": "^5.1.0",
     "faker": "^5.5.3",
