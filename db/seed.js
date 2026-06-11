@@ -11,12 +11,25 @@ await db.end();
 console.log("🌱 Database seeded.");
 
 async function seed() {
-  for (let i = 1; i <= 20; i++) {
-    await createPlaylist("Playlist " + i, "lorem ipsum playlist description");
-    await createTrack("Track " + i, i * 50000);
+  const user1 = await createUser(faker.internet.username(), "password12345");
+  const user2 = await createUser(faker.internet.username(), "password123");
+
+  for (let i = 0; i < 20; i++) {
+    await createTrack(
+      faker.music.songName(),
+      faker.number.int({ min: 120000, max: 360000 })
+    );
   }
+
+  for (let i = 0; i < 5; i++) {
+    await createPlaylist(faker.word.words(3), faker.lorem.sentence(), user1.id);
+    await createPlaylist(faker.word.words(3), faker.lorem.sentence(), user2.id);
+  }
+
   for (let i = 1; i <= 15; i++) {
-    const playlistId = 1 + Math.floor(i / 2);
-    await createPlaylistTrack(playlistId, i);
+    const trackId = 1 + Math.floor(Math.random() * 20);
+    const playlistId = 1 + Math.floor(Math.random() * 10);
+    await createPlaylistTrack(playlistId, trackId);
   }
 }
+
